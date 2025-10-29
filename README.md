@@ -54,7 +54,7 @@ streamlit run bonus_quest_complete.py
 
 ### Option 2: Use Streamlit Cloud
 
-Click here to view the live dashboard: [Live Demo](https://your-app-name.streamlit.app)
+Click here to view the live dashboard: [Live Demo]([https://your-app-name.streamlit.app](https://meeting-intelligence-dashboard-w4rz4ctwfxlpr75bgvwwjf.streamlit.app/))
 
 ## 📁 Meeting File Format
 
@@ -170,12 +170,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - ACT Framework for outcome prediction
 - Streamlit for the amazing framework
 - HuggingFace for NLP models
-
-## 📞 Support
-
-- 📧 Email: arif.farhan.bukhori@gmail.com
-- 💬 Issues: [GitHub Issues](https://github.com/YOUR_USERNAME/meeting-intelligence-dashboard/issues)
-- 📖 Docs: [Documentation](https://your-docs-site.com)
 
 ## 🔮 Roadmap
 
