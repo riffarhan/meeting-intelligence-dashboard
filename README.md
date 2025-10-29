@@ -54,7 +54,7 @@ streamlit run bonus_quest_complete.py
 
 ### Option 2: Use Streamlit Cloud
 
-Click here to view the live dashboard: [Live Demo]([https://your-app-name.streamlit.app](https://meeting-intelligence-dashboard-w4rz4ctwfxlpr75bgvwwjf.streamlit.app/))
+Click here to view the live dashboard: [Live Demo](https://meeting-intelligence-dashboard-w4rz4ctwfxlpr75bgvwwjf.streamlit.app/)
 
 ## 📁 Meeting File Format
 
@@ -184,4 +184,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ⭐ **Star this repo** if you find it helpful!
 
-🎯 **[Try the Live Demo](https://your-app-name.streamlit.app)**
+🎯 **[Try the Live Demo](https://meeting-intelligence-dashboard-w4rz4ctwfxlpr75bgvwwjf.streamlit.app/)**
