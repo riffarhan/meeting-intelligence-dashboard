@@ -161,8 +161,8 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 👤 Author
 
 **Your Name**
-- GitHub: [@your_username](https://github.com/your_username)
-- LinkedIn: [Your Name](https://linkedin.com/in/your-profile)
+- GitHub: [@riffarhan]((https://github.com/riffarhan))
+- LinkedIn: [Arif Farhan Bukhori](https://www.linkedin.com/in/farhanbukhori/)
 
 ## 🙏 Acknowledgments
 
@@ -173,7 +173,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Support
 
-- 📧 Email: your.email@example.com
+- 📧 Email: arif.farhan.bukhori@gmail.com
 - 💬 Issues: [GitHub Issues](https://github.com/YOUR_USERNAME/meeting-intelligence-dashboard/issues)
 - 📖 Docs: [Documentation](https://your-docs-site.com)
 
