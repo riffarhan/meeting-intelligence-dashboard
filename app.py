@@ -12,6 +12,7 @@ import re
 from datetime import datetime
 from collections import Counter, defaultdict
 import os
+import tempfile
 from typing import Dict, List, Tuple, Optional, Any
 from dataclasses import dataclass
 import warnings
@@ -330,7 +331,7 @@ class AdvancedNLPAnalyzer:
         return list(dict.fromkeys(actions))[:5]
 
 
-def analyze_chat_framework(dialogue: List[Dict], sarah_utterances: List[str],
+def analyze_chat_framework(dialogue: List[Dict], sarah_utterances: List[str], 
                           report_utterances: List[str]) -> Dict[str, float]:
     """Enhanced CHAT Framework analysis with weighted scoring"""
     
@@ -363,7 +364,7 @@ def analyze_chat_framework(dialogue: List[Dict], sarah_utterances: List[str],
     
     # HEAR: Active listening, understanding (0-1 score)
     hear_signals = {
-        'paraphrasing': [r"so what (you're|you are) saying", r"what i('m| am) hearing",
+        'paraphrasing': [r"so what (you're|you are) saying", r"what i('m| am) hearing", 
                         r"if i understand", r"let me (check|see) if"],
         'clarifying': [r"can you (tell me more|elaborate|explain)", r"what do you mean",
                       r"help me understand", r"clarify"],
@@ -417,7 +418,7 @@ def analyze_chat_framework(dialogue: List[Dict], sarah_utterances: List[str],
     scores['transform'] = min(transform_count / 10, 1.0)
     
     # Overall CHAT score
-    scores['overall'] = (scores['connect'] + scores['hear'] +
+    scores['overall'] = (scores['connect'] + scores['hear'] + 
                         scores['ask'] + scores['transform']) / 4
     
     # Determine mastery level (1-4)
@@ -433,7 +434,7 @@ def analyze_chat_framework(dialogue: List[Dict], sarah_utterances: List[str],
     return scores
 
 
-def predict_act_outcomes(dialogue: List[Dict], report_utterances: List[str],
+def predict_act_outcomes(dialogue: List[Dict], report_utterances: List[str], 
                          report_sentiment: float) -> Dict[str, float]:
     """Enhanced ACT prediction with ML-inspired features"""
     
@@ -457,7 +458,7 @@ def predict_act_outcomes(dialogue: List[Dict], report_utterances: List[str],
     
     # Sentiment-weighted engagement
     base_engagement = 0.5 + (report_sentiment * 0.3)
-    signal_boost = (engagement_signals['positive_emotion'] + engagement_signals['energy_words'] -
+    signal_boost = (engagement_signals['positive_emotion'] + engagement_signals['energy_words'] - 
                    engagement_signals['negative_emotion']) / max(len(report_utterances), 1)
     
     predictions['engagement'] = min(max(base_engagement + signal_boost * 0.2, 0), 1)
@@ -497,7 +498,7 @@ def predict_act_outcomes(dialogue: List[Dict], report_utterances: List[str],
     predictions['ownership'] = min(max(0.5 + ownership_score, 0), 1)
     
     # Overall ACT score
-    predictions['overall'] = (predictions['engagement'] + predictions['readiness'] +
+    predictions['overall'] = (predictions['engagement'] + predictions['readiness'] + 
                              predictions['ownership']) / 3
     
     # Confidence in prediction (based on dialogue length and signals detected)
@@ -597,7 +598,7 @@ def calculate_interactivity_score(dialogue: List[Dict]) -> float:
     intervals = max(estimated_minutes / 5, 1)
     
     # Count speaker switches
-    switches = sum(1 for i in range(len(dialogue)-1)
+    switches = sum(1 for i in range(len(dialogue)-1) 
                    if dialogue[i]['speaker'] != dialogue[i+1]['speaker'])
     
     switches_per_interval = switches / intervals
@@ -654,7 +655,7 @@ def analyze_team_dynamics(dialogue: List[Dict]) -> TeamMetrics:
     participation_values = list(participation_dist.values())
     dominance_score = np.std(participation_values) / 100 if participation_values else 0
     
-    max_possible_std = np.sqrt(((100 - 100/participant_count)**2 * (participant_count - 1) +
+    max_possible_std = np.sqrt(((100 - 100/participant_count)**2 * (participant_count - 1) + 
                                 (100/participant_count)**2) / participant_count)
     inclusion_score = 1 - (np.std(participation_values) / max_possible_std) if max_possible_std > 0 else 1.0
     
@@ -667,8 +668,8 @@ def analyze_team_dynamics(dialogue: List[Dict]) -> TeamMetrics:
     
     decision_words = ['decide', 'agreed', 'action item', 'will do', 'assigned', 'owner']
     decision_count = sum(
-        1 for d in dialogue
-        for word in decision_words
+        1 for d in dialogue 
+        for word in decision_words 
         if word in d['text'].lower()
     )
     decision_quality = min(decision_count / max(len(dialogue), 1), 1.0)
@@ -1051,7 +1052,7 @@ def create_timeline_chart(meetings: List[Dict], metric_name: str, person_filter:
     return fig
 
 
-def create_comparison_bar(alex_meetings: List[Dict], javier_meetings: List[Dict],
+def create_comparison_bar(alex_meetings: List[Dict], javier_meetings: List[Dict], 
                           metric_name: str) -> go.Figure:
     """Create comparative bar chart"""
     
@@ -1092,11 +1093,11 @@ def create_comparison_bar(alex_meetings: List[Dict], javier_meetings: List[Dict]
     
     # Add benchmark line if applicable
     if 'Talk Ratio' in title:
-        fig.add_hline(y=50, line_dash="dash", line_color="gray",
+        fig.add_hline(y=50, line_dash="dash", line_color="gray", 
                      annotation_text="Ideal: 50%", annotation_position="right")
         fig.add_hrect(y0=40, y1=60, fillcolor="green", opacity=0.1, line_width=0)
     elif 'Score' in title or 'Quality' in title:
-        fig.add_hline(y=70, line_dash="dash", line_color="gray",
+        fig.add_hline(y=70, line_dash="dash", line_color="gray", 
                      annotation_text="Target: 70%", annotation_position="right")
     
     fig.update_layout(
@@ -1396,7 +1397,7 @@ def show_meeting_analysis(meetings, show_detailed, show_actions):
     
     # Meeting selector
     meeting_options = [f"{m['date_str']} - {m['person']}" for m in meetings]
-    selected_idx = st.selectbox("Select Meeting", range(len(meetings)),
+    selected_idx = st.selectbox("Select Meeting", range(len(meetings)), 
                                 format_func=lambda i: meeting_options[i])
     
     meeting = meetings[selected_idx]
@@ -2297,11 +2298,44 @@ def main():
     with st.sidebar:
         st.markdown("### 📁 Data Source")
         
-        folder_path = st.text_input(
-            "Meeting Transcripts Folder",
-            value="meetings",
-            help="Folder containing both 1:1 and team meeting transcripts"
+        # Choose data source method
+        data_source = st.radio(
+            "How do you want to load meetings?",
+            ["📤 Upload Files", "📁 Use Folder Path"],
+            help="Upload files directly or specify a folder path (folder path only works locally)"
         )
+        
+        if data_source == "📤 Upload Files":
+            st.markdown("#### Upload Meeting Files")
+            uploaded_files = st.file_uploader(
+                "Upload .docx meeting transcripts",
+                type=['docx'],
+                accept_multiple_files=True,
+                help="Upload one or more .docx files containing meeting transcripts"
+            )
+            
+            if uploaded_files:
+                st.success(f"✅ {len(uploaded_files)} file(s) uploaded")
+                
+                # Save uploaded files to temp directory
+                import tempfile
+                temp_dir = tempfile.mkdtemp()
+                for uploaded_file in uploaded_files:
+                    file_path = os.path.join(temp_dir, uploaded_file.name)
+                    with open(file_path, 'wb') as f:
+                        f.write(uploaded_file.getbuffer())
+                
+                folder_path = temp_dir
+            else:
+                st.info("👆 Upload meeting files to get started")
+                folder_path = None
+        else:
+            folder_path = st.text_input(
+                "Meeting Transcripts Folder",
+                value="meetings",
+                help="Folder containing both 1:1 and team meeting transcripts (only works locally)"
+            )
+            st.warning("⚠️ Folder path only works when running locally, not on Streamlit Cloud")
         
         if st.button("🔄 Load/Refresh Data", use_container_width=True):
             st.cache_data.clear()
@@ -2327,6 +2361,29 @@ def main():
         """)
     
     # Load data
+    if not folder_path:
+        st.info("👈 Please upload meeting files or specify a folder path in the sidebar to get started.")
+        st.markdown("---")
+        st.markdown("### 📖 How to Use This Dashboard")
+        st.markdown("""
+        This dashboard analyzes meeting transcripts using AI-powered frameworks:
+        
+        **📤 Upload Method (Recommended for Streamlit Cloud):**
+        1. Click "Upload Files" in the sidebar
+        2. Select your .docx meeting transcript files
+        3. Click "Load/Refresh Data"
+        
+        **📁 Folder Method (For Local Use):**
+        1. Place .docx files in a folder
+        2. Enter the folder path in the sidebar
+        3. Click "Load/Refresh Data"
+        
+        **📄 Expected File Formats:**
+        - **1:1 Meetings**: `FirstName_LastName_DDMmmYY.docx` with "Name:" speaker format
+        - **Team Meetings**: Any .docx with [Speaker N] format
+        """)
+        return
+    
     one_on_one_meetings, team_meetings = load_all_meetings(folder_path)
     
     if not one_on_one_meetings and not team_meetings:
